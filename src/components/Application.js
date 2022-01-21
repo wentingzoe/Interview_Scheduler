@@ -44,14 +44,9 @@ export default function Application(props) {
       time: "4pm",
     }
   ];
-  const [day,setDay] = useState('Monday');
-  const [days,setDays] = useState([]);
 
-  useEffect(() => {
-    axios.get('/api/days').then(response => {
-      setDays([response.data.results])
-    });
-  }, [])
+  const [day,setDay] = useState('Monday');
+  const [days, setDays] = useState([]);
 
   const appointmentItem = appointments.map((appointment) =>
   <Appointment
@@ -59,31 +54,36 @@ export default function Application(props) {
   id={appointment.id}
   time={appointment.time}
   interview={appointment.interview}
-  />
-  )
+  />)
   
+  useEffect(() => {
+    const url = 'api/days';
+    axios.get(url)
+    .then(res => setDays(res.data))
+    .catch(err => console.log(err))
+  },[])
   
   return (
     <main className="layout">
       <section className="sidebar">
       <img
-  className="sidebar--centered"
-  src="images/logo.png"
-  alt="Interview Scheduler"
-/>
-<hr className="sidebar__separator sidebar--centered" />
-<nav className="sidebar__menu">
-<DayList
-  days={days}
-  day={day}
-  setDay={setDay}
-/>
-</nav>
-<img
-  className="sidebar__lhl sidebar--centered"
-  src="images/lhl.png"
-  alt="Lighthouse Labs"
-/>
+        className="sidebar--centered"
+        src="images/logo.png"
+        alt="Interview Scheduler"
+      />
+      <hr className="sidebar__separator sidebar--centered" />
+      <nav className="sidebar__menu">
+      <DayList
+        days={days}
+        day={day}
+        setDay={setDay}
+      />
+      </nav>
+      <img
+        className="sidebar__lhl sidebar--centered"
+        src="images/lhl.png"
+        alt="Lighthouse Labs"
+      />
       </section>
       <section className="schedule">
         {appointmentItem}
