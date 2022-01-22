@@ -5,72 +5,42 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "components/Appointment";
-export default function Application(props) {
-  const appointments = [
-    {
-      id: 1,
-      time: "12pm",
-    },
-    {
-      id: 2,
-      time: "1pm",
-      interview: {
-        student: "Lydia Miller-Jones",
-        interviewer:{
-          id: 3,
-          name: "Sylvia Palmer",
-          avatar: "https://i.imgur.com/LpaY82x.png",
-        }
-      }
-    },
-    {
-      id: 3,
-      time: "2pm",
-    },
-    {
-      id: 4,
-      time: "3pm",
-      interview: {
-        student: "Archie Andrews",
-        interviewer:{
-          id: 4,
-          name: "Cohana Roy",
-          avatar: "https://i.imgur.com/FK8V841.jpg",
-        }
-      }
-    },
-    {
-      id: 5,
-      time: "4pm",
-    }
-  ];
-  const appointmentItem = appointments.map((appointment) =>
-  <Appointment
-  key={appointment.id}
-  id={appointment.id}
-  time={appointment.time}
-  interview={appointment.interview}
-  />)
+import { getAppointmentsForDay } from "helpers/selectors";
 
-  // const [day,setDay] = useState('Monday');
-  // const [days, setDays] = useState([]);
+export default function Application(props) {
+  //combine all useState 
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    //appointments: {}
+    appointments: {}
   });
-
+  // setday to update our DayList component
   const setDay = (day) => setState({...state, day});
-  const setDays = (days) => setState(prev => ({ ...prev, days }))
-
- 
-  
+  //combine all api
   useEffect(() => {
-    const url = '/api/days';
-    axios.get(url)
-    .then(res => setDays(res.data))
+    const GET_DAYS = '/api/days';
+    const GET_APPOINTMENTS = '/api/appointments';
+    const GET_INTERVIEWERS = '/api/interviewers';
+    Promise.all([
+      axios.get(GET_DAYS),
+      axios.get(GET_APPOINTMENTS),
+      axios.get(GET_INTERVIEWERS)
+    ]).then((all) => {
+      // console.log("check all api:",all)
+      setState(prev =>({
+        ...prev,
+        days: all[0].data,
+        appointments: all[1].data
+      }))
+    })
     .catch(err => console.log(err))
   },[])
+
+  // use helper funtion to find appointment by given day
+  let dailyAppointments = getAppointmentsForDay(state, state.day);
+
+  const appointmentItem =dailyAppointments.map((appointment) =><Appointment key={appointment.id} {...appointment} />)
+
   
   return (
     <main className="layout">
