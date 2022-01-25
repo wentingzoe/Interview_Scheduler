@@ -17,34 +17,56 @@ export default function Application(props) {
   });
   // setday to update our DayList component
   const setDay = (day) => setState({...state, day});
-  //combine all api
-  useEffect(() => {
-    const GET_DAYS = '/api/days';
-    const GET_APPOINTMENTS = '/api/appointments';
-    const GET_INTERVIEWERS = '/api/interviewers';
+  //GET all api
+  useEffect(() => {  
     Promise.all([
-      axios.get(GET_DAYS),
-      axios.get(GET_APPOINTMENTS),
-      axios.get(GET_INTERVIEWERS)
+      axios.get('/api/days'),
+      axios.get('/api/appointments'),
+      axios.get('/api/interviewers')
     ]).then((all) => {
-      // console.log("check all api:",all)
       setState(prev =>({
         ...prev,
         days: all[0].data,
         appointments: all[1].data,
-        interviewers: all[3].data
+        interviewers: all[2].data
       }))
     })
     .catch(err => console.log(err))
   },[]);
 
+  
+
   // use helper funtion to find appointment by given day
   let dailyAppointments = getAppointmentsForDay(state, state.day);
-  let interviewers = getInterviewersForDay(state, state.day)
+  
+  function bookInterview(id, interview){
+    console.log("BOOK INTERVIEW:",id, interview);
+  
+    return axios.put(`/api/appointments/${id}`, {interview: interview}).then(() => {
+  
+       const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+     
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+
+      setState({
+        ...state, 
+        appointments: appointments
+      })
+    
+    })
+
+    
+  }
 
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-  
+    const interviewers = getInterviewersForDay(state, state.day);
     return (
       <Appointment
         key={appointment.id}
@@ -52,9 +74,13 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
   });
+
+  
+
 
   
   return (
