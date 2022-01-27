@@ -41,10 +41,9 @@ xit("changes the schedule when a new day is selected", async () => {
 it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
   const { container, debug } = render(<Application />);
 
-      // Wait until Archie Cohen loads
+   
       await waitForElement(() => getByText(container, "Archie Cohen"));
     
-      // First empty appointment
       const appointments = getAllByTestId(container, "appointment");
       const appointment = appointments[0];
       
