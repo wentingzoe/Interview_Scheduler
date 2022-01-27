@@ -3,6 +3,11 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.16
+  deploy-job:
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SO:ME:FIN:G:ER:PR:IN:T"
 
     working_directory: ~/client
 
