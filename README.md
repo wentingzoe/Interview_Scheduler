@@ -11,22 +11,23 @@ The following were the main conclusions from creating a react app with create-re
 
 * Passing props and hooks to React component (useState, useEffect, useReducer).
 * Using custom hooks to render components and construct controlled forms while managing state.
-* Web sockets and Axios requests (not in production — branch: stretch/WebSockets)
+* Axios API requests, mutiple API enviorments(development, test) set-up.  
 * Immutable patterns, conditional rendering, and DOM event management are all considered.
 * Storybook (components), Jest (unit, integration), and Cypress are all used for testing (End to End).
 
 ## Final Product 
 ### Add, edit and delete an appointment 
-![Functionality]()
+![Functionality](https://github.com/wentingzoe/Interview_Scheduler/blob/master/doc/01_components.gif)
+
+### Save Validation
+![valication](https://github.com/wentingzoe/Interview_Scheduler/blob/master/doc/02_validation.gif)
 
 ### Save and delete an appointment - error messages 
-![]()
+![Error](https://github.com/wentingzoe/Interview_Scheduler/blob/master/doc/03_error.gif?raw=true)
 
 ### Sidebar : selected-day, full-appointments, change-day
-![]()
+![nav](https://github.com/wentingzoe/Interview_Scheduler/blob/master/doc/04_sidebar.gif)
 
-### Websockets
-![]()
 
 ## Getting Started
 * Install dependencies with `npm install`.
