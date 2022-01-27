@@ -25,12 +25,12 @@ export default function Form(props) {
       return;
     }
 
-    // if (!interviewer) {
-    //   setError("Please select an interviewer");
-    //   return;
-    // }
+    if (!interviewer) {
+      setError("Please select an interviewer");
+      return;
+    }
 
-    //to clear the error on successful submission
+    // to clear the error on successful submission
     setError("");
     onSave(student, interviewer);
   }
