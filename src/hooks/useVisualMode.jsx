@@ -25,30 +25,3 @@ export default function useVisualMode(initial) {
   }
   return { mode, transition, back };
 }
-
-/******
- * history = [EMPTY] 
- * mode = EMPTY 
- * history = [EMPTY, CREATE] 
- * mode = CREATE
- * -> back 
- * history = [EMPTY]
- * mode = EMPTY
- * 
- * 
- * history =[EMPTY]
- * mode = EMPTY
- * -> add
- * history = [EMPTY, CREATE] 
- * mode = CREATE
- * -> save
- * history = [EMPTY, CREATE, SHOW]
- * mode = SHOW
- * 
- *--- EDIT ----
- * history = [SHOW]
- * mode = SHOW
- * -> edit 
- * 
- * 
- */
