@@ -4,7 +4,7 @@ Interview Scheduler is a simple application for arranging interviews. Lighthouse
 
 By clicking on an empty timeslot, students can book an appointment with a mentor. They can then enter their name and choose a mentor from those available that day. Appointments can be scheduled for different days and times during the week and edited or deleted.
 
-This app was deployed online through Heroku, CircleCI and Netlify. 
+This app was deployed online through Heroku, CircleCI and Netlify. Please try the Demo link: https://interview-scheduler-wenting.netlify.app/ (Give it a few seconds to warmup the API)
 
 ## Essential Key points
 The following were the main conclusions from creating a react app with create-react-app and using a variety of testing libraries:
