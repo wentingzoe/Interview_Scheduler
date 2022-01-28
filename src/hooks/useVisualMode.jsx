@@ -17,6 +17,7 @@ export default function useVisualMode(initial) {
   // Back -- Moves to the previous mode
   const back = () => {
     if (history.length > 1) {
+
       // If there is only one item (i.e. first mode), don't pop.
       history.pop();
     }
